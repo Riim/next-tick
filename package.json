@@ -1,0 +1,27 @@
+{
+  "name": "@riim/next-tick",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "node_modules/.bin/tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Riim/next-tick.git"
+  },
+  "author": "Dmitry Vibe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Riim/next-tick/issues"
+  },
+  "homepage": "https://github.com/Riim/next-tick#readme",
+  "devDependencies": {
+    "typescript": "^2.5.1"
+  },
+  "dependencies": {
+    "@riim/error-logger": "^1.0.1"
+  }
+}
