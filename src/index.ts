@@ -1,4 +1,4 @@
-import { logError } from '@riim/error-logger';
+import { error } from '@riim/logger';
 
 let global = Function('return this;')();
 
@@ -31,7 +31,7 @@ if (global.process && global.process.toString() == '[object process]' && global.
 				try {
 					track[i]();
 				} catch (err) {
-					logError(err);
+					error(err);
 				}
 			}
 		}

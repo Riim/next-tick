@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var error_logger_1 = require("@riim/error-logger");
+var logger_1 = require("@riim/logger");
 var global = Function('return this;')();
 var nextTick;
 exports.nextTick = nextTick;
@@ -31,7 +31,7 @@ else {
                     track[i]();
                 }
                 catch (err) {
-                    error_logger_1.logError(err);
+                    logger_1.error(err);
                 }
             }
         }
