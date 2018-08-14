@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
 		"declaration": true,
 		"experimentalDecorators": true,
 		"lib": ["dom", "es2017"],
@@ -11,6 +10,7 @@
 		"outDir": "dist",
 		"preserveConstEnums": true,
 		"strictNullChecks": true,
+		"suppressImplicitAnyIndexErrors": true,
 		"target": "es5"
 	},
 	"files": [

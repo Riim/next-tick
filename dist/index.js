@@ -8,13 +8,13 @@ if (global.process && global.process.toString() == '[object process]' && global.
     exports.nextTick = nextTick = global.process.nextTick;
 }
 else if (global.setImmediate) {
-    exports.nextTick = nextTick = function nextTick(callback) {
+    exports.nextTick = nextTick = function (callback) {
         setImmediate(callback);
     };
 }
 else if (global.Promise && Promise.toString().indexOf('[native code]') != -1) {
     var prm_1 = Promise.resolve();
-    exports.nextTick = nextTick = function nextTick(callback) {
+    exports.nextTick = nextTick = function (callback) {
         prm_1.then(function () {
             callback();
         });
@@ -36,7 +36,7 @@ else {
             }
         }
     });
-    exports.nextTick = nextTick = function nextTick(callback) {
+    exports.nextTick = nextTick = function (callback) {
         if (queue_1) {
             queue_1.push(callback);
         }
