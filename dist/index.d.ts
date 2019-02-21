@@ -1,2 +1,2 @@
-declare let nextTick: (callback: Function) => void;
+declare let nextTick: (cb: Function) => void;
 export { nextTick };

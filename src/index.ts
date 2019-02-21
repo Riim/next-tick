@@ -2,20 +2,22 @@ import { error } from '@riim/logger';
 
 const global = Function('return this;')();
 
-let nextTick: (callback: Function) => void;
+let nextTick: (cb: Function) => void;
 
 if (global.process && global.process.toString() == '[object process]' && global.process.nextTick) {
 	nextTick = global.process.nextTick;
-} else if (global.setImmediate) {
-	nextTick = callback => {
-		setImmediate(callback);
+} else if (global.setImmediate && global.setImmediate.toString().indexOf('[native code]') != -1) {
+	const setImmediate = global.setImmediate;
+
+	nextTick = cb => {
+		setImmediate(cb);
 	};
 } else if (global.Promise && Promise.toString().indexOf('[native code]') != -1) {
 	const prm = Promise.resolve();
 
-	nextTick = callback => {
+	nextTick = cb => {
 		prm.then(() => {
-			callback();
+			cb();
 		});
 	};
 } else {
@@ -37,11 +39,11 @@ if (global.process && global.process.toString() == '[object process]' && global.
 		}
 	});
 
-	nextTick = callback => {
+	nextTick = cb => {
 		if (queue) {
-			queue.push(callback);
+			queue.push(cb);
 		} else {
-			queue = [callback];
+			queue = [cb];
 			postMessage('__tic__', '*');
 		}
 	};

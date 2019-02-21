@@ -1,32 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var logger_1 = require("@riim/logger");
-var global = Function('return this;')();
-var nextTick;
+const logger_1 = require("@riim/logger");
+const global = Function('return this;')();
+let nextTick;
 exports.nextTick = nextTick;
 if (global.process && global.process.toString() == '[object process]' && global.process.nextTick) {
     exports.nextTick = nextTick = global.process.nextTick;
 }
-else if (global.setImmediate) {
-    exports.nextTick = nextTick = function (callback) {
-        setImmediate(callback);
+else if (global.setImmediate && global.setImmediate.toString().indexOf('[native code]') != -1) {
+    const setImmediate = global.setImmediate;
+    exports.nextTick = nextTick = cb => {
+        setImmediate(cb);
     };
 }
 else if (global.Promise && Promise.toString().indexOf('[native code]') != -1) {
-    var prm_1 = Promise.resolve();
-    exports.nextTick = nextTick = function (callback) {
-        prm_1.then(function () {
-            callback();
+    const prm = Promise.resolve();
+    exports.nextTick = nextTick = cb => {
+        prm.then(() => {
+            cb();
         });
     };
 }
 else {
-    var queue_1;
-    global.addEventListener('message', function () {
-        if (queue_1) {
-            var track = queue_1;
-            queue_1 = null;
-            for (var i = 0, l = track.length; i < l; i++) {
+    let queue;
+    global.addEventListener('message', () => {
+        if (queue) {
+            let track = queue;
+            queue = null;
+            for (let i = 0, l = track.length; i < l; i++) {
                 try {
                     track[i]();
                 }
@@ -36,12 +37,12 @@ else {
             }
         }
     });
-    exports.nextTick = nextTick = function (callback) {
-        if (queue_1) {
-            queue_1.push(callback);
+    exports.nextTick = nextTick = cb => {
+        if (queue) {
+            queue.push(cb);
         }
         else {
-            queue_1 = [callback];
+            queue = [cb];
             postMessage('__tic__', '*');
         }
     };
