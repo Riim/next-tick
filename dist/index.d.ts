@@ -1,2 +1,1 @@
-declare let nextTick: (cb: Function) => void;
-export { nextTick };
+export declare const nextTick: (cb: Function) => void;

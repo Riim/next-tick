@@ -1,26 +1,34 @@
 import { error } from '@riim/logger';
 
-const global = Function('return this;')();
+export const nextTick: (cb: Function) => void = (() => {
+	const global = Function('return this;')();
 
-let nextTick: (cb: Function) => void;
+	if (
+		global.process &&
+		global.process.toString() == '[object process]' &&
+		global.process.nextTick
+	) {
+		return global.process.nextTick;
+	}
 
-if (global.process && global.process.toString() == '[object process]' && global.process.nextTick) {
-	nextTick = global.process.nextTick;
-} else if (global.setImmediate && global.setImmediate.toString().indexOf('[native code]') != -1) {
-	const setImmediate = global.setImmediate;
+	if (global.setImmediate && global.setImmediate.toString().indexOf('[native code]') != -1) {
+		const setImmediate = global.setImmediate;
 
-	nextTick = cb => {
-		setImmediate(cb);
-	};
-} else if (global.Promise && Promise.toString().indexOf('[native code]') != -1) {
-	const prm = Promise.resolve();
+		return (cb: Function) => {
+			setImmediate(cb);
+		};
+	}
 
-	nextTick = cb => {
-		prm.then(() => {
-			cb();
-		});
-	};
-} else {
+	if (global.Promise && Promise.toString().indexOf('[native code]') != -1) {
+		const prm = Promise.resolve();
+
+		return (cb: Function) => {
+			prm.then(() => {
+				cb();
+			});
+		};
+	}
+
 	let queue: Array<Function> | null;
 
 	global.addEventListener('message', () => {
@@ -39,7 +47,7 @@ if (global.process && global.process.toString() == '[object process]' && global.
 		}
 	});
 
-	nextTick = cb => {
+	return (cb: Function) => {
 		if (queue) {
 			queue.push(cb);
 		} else {
@@ -47,6 +55,4 @@ if (global.process && global.process.toString() == '[object process]' && global.
 			postMessage('__tic__', '*');
 		}
 	};
-}
-
-export { nextTick };
+})();
