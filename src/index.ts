@@ -1,4 +1,6 @@
-import { error } from '@riim/logger';
+import { logError } from './utils';
+
+export { configure } from './configuration';
 
 export const nextTick: (cb: Function) => void = (() => {
 	const global = Function('return this;')();
@@ -41,7 +43,7 @@ export const nextTick: (cb: Function) => void = (() => {
 				try {
 					track[i]();
 				} catch (err) {
-					error(err);
+					logError(err);
 				}
 			}
 		}

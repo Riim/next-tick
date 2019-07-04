@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const logger_1 = require("@riim/logger");
+const utils_1 = require("./utils");
+var configuration_1 = require("./configuration");
+exports.configure = configuration_1.configure;
 exports.nextTick = (() => {
     const global = Function('return this;')();
     if (global.process &&
@@ -32,7 +34,7 @@ exports.nextTick = (() => {
                     track[i]();
                 }
                 catch (err) {
-                    logger_1.error(err);
+                    utils_1.logError(err);
                 }
             }
         }

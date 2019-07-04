@@ -19,9 +19,6 @@
   },
   "homepage": "https://github.com/Riim/next-tick#readme",
   "devDependencies": {
-    "typescript": "^3.3.3"
-  },
-  "dependencies": {
-    "@riim/logger": "^1.0.2"
+    "typescript": "^3.5.2"
   }
 }
