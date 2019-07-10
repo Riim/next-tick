@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.nextTick = (() => {
+export const nextTick = (() => {
     const global = Function('return this;')();
     if (global.process &&
         global.process.toString() == '[object process]' &&
