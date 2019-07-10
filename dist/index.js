@@ -13,8 +13,6 @@ export const nextTick = (() => {
     }
     const promise = Promise.resolve();
     return (cb) => {
-        promise.then(() => {
-            cb();
-        });
+        promise.then(cb);
     };
 })();

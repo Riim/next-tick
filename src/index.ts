@@ -20,8 +20,6 @@ export const nextTick: (cb: Function) => void = (() => {
 	const promise = Promise.resolve();
 
 	return (cb: Function) => {
-		promise.then(() => {
-			cb();
-		});
+		promise.then(cb as any);
 	};
 })();
