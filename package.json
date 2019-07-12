@@ -2,6 +2,7 @@
   "name": "@riim/next-tick",
   "version": "1.2.2",
   "description": "",
+  "type": "module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
