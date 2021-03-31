@@ -2,7 +2,7 @@
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(global = global || self, factory(global['@riim/next-tick'] = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
 	const nextTick = (() => {
 	    const global = Function('return this;')();
@@ -27,4 +27,4 @@
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
