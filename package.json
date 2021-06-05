@@ -2,7 +2,7 @@
   "name": "@riim/next-tick",
   "version": "1.2.5",
   "description": "",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/nextTick.umd.js",
   "typings": "dist/nextTick.d.ts",
   "scripts": {
